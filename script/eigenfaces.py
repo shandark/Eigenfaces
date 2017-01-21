@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import matplotlib.pyplot as plt
+import scipy.spatial.distance
 
 import argparse
 import imghdr
@@ -8,6 +9,7 @@ import numpy
 import os
 import random
 import scipy.misc
+import math
 
 parser = argparse.ArgumentParser(description="Eigenface reconstruction demonstration")
 parser.add_argument("data",       metavar="DATA", type=str,   help="Data directory")
@@ -25,9 +27,9 @@ if variance > 1.0:
 elif variance < 0.0:
   variance = 0.0
 
-def enumerateImagePaths(root):
+def enumerateImagePaths(dataDirectory1):
   filenames = list()
-  for root, _, files in os.walk(dataDirectory):
+  for root, _, files in os.walk(dataDirectory1):
     path = root.split('/')
     for f in files:
       filename = os.path.join(root, f)
@@ -38,6 +40,9 @@ def enumerateImagePaths(root):
 filenames          = enumerateImagePaths(dataDirectory)
 trainingImageNames = filenames
 numTrainingFaces = len(trainingImageNames)
+
+maxWeight = 0
+
 #
 # Choose training images
 #
@@ -107,28 +112,61 @@ for name in filenames:
   for i in range(numEffectiveEigenvalues):
     weights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
   
+  if maxWeight < max(weights):
+    maxWeight = max(weights)
+  
   personWeights[name] = weights
 
-print ("End with success")
+print ("End training with success")
 
 # End Training
 
 # Start recognition
 
 # TODO: Add path and filenames
-filesToRecognize = list() 
+unknownDirectory = "Data/unknown"
+filesToRecognize = enumerateImagePaths(unknownDirectory)
 unknownFaceImages = list()
-
-for name in filesToRecognize:
-   image = scipy.misc.imread(name) 
-
-   image = image - meanFace
+recognizedFaces = 0
 
 
+#tempT = list() 
 
-# Convert UNKNOWN face to FaceVector
+for nameToRecognize in filesToRecognize:
+  image = scipy.misc.imread(nameToRecognize) 
 
-# Normalize vector by image - meanFace
+  # Convert UNKNOWN face to FaceVector
+  # Normalize vector by image - meanFace
+  image = image - meanFace
+
+  unknownWeights = list()
+  d = maxWeight 
+  resultName = str()
+
+  for i in range(numEffectiveEigenvalues):
+    unknownWeights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+
+  for name,weights in personWeights.iteritems():
+    tempD = scipy.spatial.distance.euclidean(unknownWeights , weights)
+    if tempD < d:
+       d = tempD
+       resultName = name
+
+  #tempT.append(d)
+
+  # TODO: How calc threshold???
+  if d < 224210797:
+    print("The %s recognized as %s" % (nameToRecognize, resultName))
+    recognizedFaces += 1
+  else:
+    print("Not %s recognized, nearest face is %s" % (nameToRecognize, resultName)) 
+
+  #print(nameToRecognize)
+
+
+print("Recognized: %d/%d" % (recognizedFaces, len(filesToRecognize)))
+#print(sorted(tempT, key=int))
+    
 
 # Convert normalized vector to eigenspace
 
