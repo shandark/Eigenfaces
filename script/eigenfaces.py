@@ -95,25 +95,36 @@ for i in range(numEffectiveEigenvalues):
 # Transform remaining images into "face space"
 #
 
-remainingImages = list()
+personWeights = dict()
 
 for name in filenames:
-  remainingImages.append( scipy.misc.imread(name) )
+  image = scipy.misc.imread(name)
 
-remainingImages = [ image - meanFace for image in remainingImages ]
+  image = image - meanFace 
 
-for image in remainingImages:
   weights = list()
 
   for i in range(numEffectiveEigenvalues):
     weights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+  
+  personWeights[name] = weights
 
 print ("End with success")
 
-# Move weight and filenames to dict? Filename could be a person name
 # End Training
 
-# Start face recognition
+# Start recognition
+
+# TODO: Add path and filenames
+filesToRecognize = list() 
+unknownFaceImages = list()
+
+for name in filesToRecognize:
+   image = scipy.misc.imread(name) 
+
+   image = image - meanFace
+
+
 
 # Convert UNKNOWN face to FaceVector
 
