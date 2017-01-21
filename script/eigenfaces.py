@@ -143,10 +143,13 @@ for nameToRecognize in filesToRecognize:
   d = maxWeight 
   resultName = str()
 
+  # Convert normalized vector to eigenspace
+  # Create weights
   for i in range(numEffectiveEigenvalues):
     unknownWeights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
 
   for name,weights in personWeights.iteritems():
+    # Calculate d = ||W - Wk||^2
     tempD = scipy.spatial.distance.euclidean(unknownWeights , weights)
     if tempD < d:
        d = tempD
@@ -155,6 +158,7 @@ for nameToRecognize in filesToRecognize:
   #tempT.append(d)
 
   # TODO: How calc threshold???
+  # d < threshold then face K [print filename - recognized person]
   if d < 224210797:
     print("The %s recognized as %s" % (nameToRecognize, resultName))
     recognizedFaces += 1
@@ -166,16 +170,3 @@ for nameToRecognize in filesToRecognize:
 
 print("Recognized: %d/%d" % (recognizedFaces, len(filesToRecognize)))
 #print(sorted(tempT, key=int))
-    
-
-# Convert normalized vector to eigenspace
-
-# Create weights
-
-# Calculate d = ||W - Wk||^2
-
-# d > threshold then not face
-
-# d < threshold then face K [print filename - recognized person]
-
-# other d then unknown person
