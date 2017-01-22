@@ -3,7 +3,6 @@
 import matplotlib.pyplot as plt
 import scipy.spatial.distance
 
-import argparse
 import imghdr
 import numpy
 import os
@@ -11,16 +10,9 @@ import random
 import scipy.misc
 import math
 
-parser = argparse.ArgumentParser(description="Eigenface reconstruction demonstration")
-parser.add_argument("data",       metavar="DATA", type=str,   help="Data directory")
-parser.add_argument("n",          metavar="N",    type=int,   help="Number of training images", default=50)
-parser.add_argument("--variance",                 type=float, help="Desired proportion of variance", default = 0.95)
 
-arguments = parser.parse_args()
-
-dataDirectory    = arguments.data
-numTrainingFaces = arguments.n
-variance         = arguments.variance
+dataDirectory    = "Data/faces/Original"
+variance         = 0.95
 
 if variance > 1.0:
   variance = 1.0
@@ -87,7 +79,6 @@ numEffectiveEigenvalues = 0
 for index,eigenvalue in enumerate(eigenvalues):
   partialSum += eigenvalue
   if partialSum / eigenvalueSum >= variance:
-    print("Reached", variance * 100, "%", "explained variance with", index+1 , "eigenvalues")
     numEffectiveEigenvalues = index+1
     break
 
@@ -117,8 +108,6 @@ for name in filenames:
   
   personWeights[name] = weights
 
-print ("End training with success")
-
 # End Training
 
 # Start recognition
@@ -127,7 +116,8 @@ print ("End training with success")
 unknownDirectory = "Data/unknown"
 filesToRecognize = enumerateImagePaths(unknownDirectory)
 unknownFaceImages = list()
-recognizedFaces = 0
+notRecognized = list()
+recognizedFaces = list()
 
 
 #tempT = list() 
@@ -160,13 +150,22 @@ for nameToRecognize in filesToRecognize:
   # TODO: How calc threshold???
   # d < threshold then face K [print filename - recognized person]
   if d < 224210797:
-    print("The %s recognized as %s" % (nameToRecognize, resultName))
-    recognizedFaces += 1
+    recognizedFaces.append("%25s %25s %20d" % (nameToRecognize.split("/")[-1], resultName.split("/")[-1], d))
   else:
-    print("Not %s recognized, nearest face is %s" % (nameToRecognize, resultName)) 
-
-  #print(nameToRecognize)
+    notRecognized.append("%25s %25s %20d" % (nameToRecognize.split("/")[-1], resultName.split("/")[-1], d))
 
 
-print("Recognized: %d/%d" % (recognizedFaces, len(filesToRecognize)))
+print("\n\n############################################\n\n")
+
+print("%25s %25s %20s" % ("Face","Recognized as","Distance"))
+for nameStr in recognizedFaces:
+   print(nameStr)
+
+print("\n\n############################################\n\n")
+
+print("%25s %25s %20s" % ("Face","Nearest face","Distance"))
+for nameStr in notRecognized:
+   print(nameStr)
+
+print("\n\nRecognized: %d/%d" % (len(recognizedFaces), len(filesToRecognize)))
 #print(sorted(tempT, key=int))
