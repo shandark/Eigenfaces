@@ -69,7 +69,9 @@ for name in trainingImageNames:
 meanFace = numpy.zeros(trainingImages[0].shape)
 
 for image in trainingImages:
-  meanFace += 1/numTrainingFaces * image
+  meanFace += image/float(numTrainingFaces)
+
+meanFace = meanFace.astype(int)
 
 trainingImages = [ image - meanFace for image in trainingImages ] 
 
@@ -167,9 +169,9 @@ for nameToRecognize in filesToRecognize:
 
   # TODO: How calc threshold???
   # d < threshold then face K [print filename - recognized person]
-  if d < 159061337:
+  if d < 353495804:
     recognizedFaces.append("%s %s %d" % (nameToRecognize, resultName, d))
-  elif d > 159061337 and d < 1219800390:
+  elif d > 353495803 and d < 635087668:
     notRecognized.append("%s %s %d" % (nameToRecognize, resultName, d))
   else:
     overThreshold.append("%s %s %d" % (nameToRecognize, resultName, d))
