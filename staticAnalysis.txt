@@ -1,0 +1,352 @@
+************* Module eigenfaces
+W:112, 0: TODO: Add path and filenames (fixme)
+W:147, 0: TODO: How calc threshold??? (fixme)
+C: 11, 0: Exactly one space required before assignment
+dataDirectory    = "Data/faces/Original"
+                 ^ (bad-whitespace)
+C: 12, 0: Exactly one space required before assignment
+variance         = 0.95
+                 ^ (bad-whitespace)
+W: 15, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W: 17, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W: 20, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W: 21, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W: 22, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+W: 23, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+W: 24, 0: Bad indentation. Found 6 spaces, expected 12 (bad-indentation)
+W: 25, 0: Bad indentation. Found 6 spaces, expected 12 (bad-indentation)
+W: 26, 0: Bad indentation. Found 8 spaces, expected 16 (bad-indentation)
+W: 27, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C: 29, 0: Exactly one space required before assignment
+filenames          = enumerateImagePaths(dataDirectory)
+                   ^ (bad-whitespace)
+W: 42, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C: 42, 0: No space allowed after bracket
+  trainingImages.append( scipy.misc.imread(name) )
+                       ^ (bad-whitespace)
+C: 42, 0: No space allowed before bracket
+  trainingImages.append( scipy.misc.imread(name) )
+                                                 ^ (bad-whitespace)
+W: 51, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C: 53, 0: Trailing whitespace (trailing-whitespace)
+C: 53, 0: No space allowed after bracket
+trainingImages = [ image - meanFace for image in trainingImages ] 
+                 ^ (bad-whitespace)
+C: 53, 0: No space allowed before bracket
+trainingImages = [ image - meanFace for image in trainingImages ] 
+                                                                ^ (bad-whitespace)
+C: 59, 0: Exactly one space required after comma
+x,y = trainingImages[0].shape
+ ^ (bad-whitespace)
+C: 60, 0: Exactly one space required before assignment
+n   = x*y
+    ^ (bad-whitespace)
+C: 61, 0: Exactly one space required before assignment
+A   = numpy.matrix( numpy.zeros((n,numTrainingFaces)) )
+    ^ (bad-whitespace)
+C: 61, 0: No space allowed after bracket
+A   = numpy.matrix( numpy.zeros((n,numTrainingFaces)) )
+                  ^ (bad-whitespace)
+C: 61, 0: Exactly one space required after comma
+A   = numpy.matrix( numpy.zeros((n,numTrainingFaces)) )
+                                  ^ (bad-whitespace)
+C: 61, 0: No space allowed before bracket
+A   = numpy.matrix( numpy.zeros((n,numTrainingFaces)) )
+                                                      ^ (bad-whitespace)
+C: 63, 0: Exactly one space required after comma
+for i,image in enumerate(trainingImages):
+     ^ (bad-whitespace)
+W: 64, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C: 64, 0: Exactly one space required after comma
+  A[:,i] = numpy.reshape(image,(n,1))
+     ^ (bad-whitespace)
+C: 64, 0: Exactly one space required after comma
+  A[:,i] = numpy.reshape(image,(n,1))
+                              ^ (bad-whitespace)
+C: 64, 0: Exactly one space required after comma
+  A[:,i] = numpy.reshape(image,(n,1))
+                                 ^ (bad-whitespace)
+C: 66, 0: Exactly one space required before assignment
+M                         = A.transpose()*A
+                          ^ (bad-whitespace)
+C: 68, 0: Exactly one space required before assignment
+indices                   = eigenvalues.argsort()[::-1]
+                          ^ (bad-whitespace)
+C: 69, 0: Exactly one space required before assignment
+eigenvalues               = eigenvalues[indices]
+                          ^ (bad-whitespace)
+C: 70, 0: Exactly one space required before assignment
+eigenvectors              = eigenvectors[:,indices]
+                          ^ (bad-whitespace)
+C: 70, 0: Exactly one space required after comma
+eigenvectors              = eigenvectors[:,indices]
+                                          ^ (bad-whitespace)
+C: 72, 0: Exactly one space required before assignment
+eigenvalueSum           = sum(eigenvalues)
+                        ^ (bad-whitespace)
+C: 73, 0: Exactly one space required before assignment
+partialSum              = 0.0
+                        ^ (bad-whitespace)
+C: 76, 0: Exactly one space required after comma
+for index,eigenvalue in enumerate(eigenvalues):
+         ^ (bad-whitespace)
+W: 77, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W: 78, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W: 79, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+W: 80, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+C: 82, 0: No space allowed after bracket
+V = numpy.matrix( numpy.zeros((n,numEffectiveEigenvalues)) )
+                ^ (bad-whitespace)
+C: 82, 0: Exactly one space required after comma
+V = numpy.matrix( numpy.zeros((n,numEffectiveEigenvalues)) )
+                                ^ (bad-whitespace)
+C: 82, 0: No space allowed before bracket
+V = numpy.matrix( numpy.zeros((n,numEffectiveEigenvalues)) )
+                                                           ^ (bad-whitespace)
+W: 84, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C: 84, 0: Exactly one space required after comma
+  V[:,i] = A*eigenvectors[:,i].real
+     ^ (bad-whitespace)
+C: 84, 0: Exactly one space required after comma
+  V[:,i] = A*eigenvectors[:,i].real
+                           ^ (bad-whitespace)
+W: 94, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C: 96, 0: Trailing whitespace (trailing-whitespace)
+W: 96, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W: 98, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W:100, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W:101, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+C:101, 0: No space allowed after bracket
+    weights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                  ^ (bad-whitespace)
+C:101, 0: Exactly one space required after comma
+    weights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                        ^ (bad-whitespace)
+C:101, 0: Exactly one space required after comma
+    weights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                                                          ^ (bad-whitespace)
+C:101, 0: No space allowed before bracket
+    weights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                                                                               ^ (bad-whitespace)
+C:102, 0: Trailing whitespace (trailing-whitespace)
+W:103, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W:104, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+C:105, 0: Trailing whitespace (trailing-whitespace)
+W:106, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C:120, 0: Trailing whitespace (trailing-whitespace)
+C:123, 0: Trailing whitespace (trailing-whitespace)
+W:123, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W:127, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W:129, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C:130, 0: Trailing whitespace (trailing-whitespace)
+W:130, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W:131, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+W:135, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C:136, 0: Line too long (87/80) (line-too-long)
+W:136, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+C:136, 0: No space allowed after bracket
+    unknownWeights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                         ^ (bad-whitespace)
+C:136, 0: Exactly one space required after comma
+    unknownWeights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                               ^ (bad-whitespace)
+C:136, 0: Exactly one space required after comma
+    unknownWeights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                                                                 ^ (bad-whitespace)
+C:136, 0: No space allowed before bracket
+    unknownWeights.append( (V[:,i].transpose() * image.reshape((n,1))).tolist()[0][0] )
+                                                                                      ^ (bad-whitespace)
+W:138, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C:138, 0: Exactly one space required after comma
+  for name,weights in personWeights.iteritems():
+          ^ (bad-whitespace)
+W:140, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+C:140, 0: No space allowed before comma
+    tempD = scipy.spatial.distance.euclidean(unknownWeights , weights)
+                                                            ^ (bad-whitespace)
+W:141, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+W:142, 0: Bad indentation. Found 7 spaces, expected 12 (bad-indentation)
+W:143, 0: Bad indentation. Found 7 spaces, expected 12 (bad-indentation)
+W:149, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C:150, 0: Line too long (109/80) (line-too-long)
+W:150, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+W:151, 0: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
+C:152, 0: Line too long (107/80) (line-too-long)
+W:152, 0: Bad indentation. Found 4 spaces, expected 8 (bad-indentation)
+C:155, 0: Unnecessary parens after 'print' keyword (superfluous-parens)
+C:157, 0: Unnecessary parens after 'print' keyword (superfluous-parens)
+C:157, 0: Exactly one space required after comma
+print("%25s %25s %20s" % ("Face","Recognized as","Distance"))
+                                ^ (bad-whitespace)
+C:157, 0: Exactly one space required after comma
+print("%25s %25s %20s" % ("Face","Recognized as","Distance"))
+                                                ^ (bad-whitespace)
+W:159, 0: Bad indentation. Found 3 spaces, expected 4 (bad-indentation)
+C:159, 0: Unnecessary parens after 'print' keyword (superfluous-parens)
+C:161, 0: Unnecessary parens after 'print' keyword (superfluous-parens)
+C:163, 0: Unnecessary parens after 'print' keyword (superfluous-parens)
+C:163, 0: Exactly one space required after comma
+print("%25s %25s %20s" % ("Face","Nearest face","Distance"))
+                                ^ (bad-whitespace)
+C:163, 0: Exactly one space required after comma
+print("%25s %25s %20s" % ("Face","Nearest face","Distance"))
+                                               ^ (bad-whitespace)
+W:165, 0: Bad indentation. Found 3 spaces, expected 4 (bad-indentation)
+C:167, 0: Unnecessary parens after 'print' keyword (superfluous-parens)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 11, 0: Invalid constant name "dataDirectory" (invalid-name)
+C: 12, 0: Invalid constant name "variance" (invalid-name)
+C: 15, 2: Invalid constant name "variance" (invalid-name)
+C: 17, 2: Invalid constant name "variance" (invalid-name)
+W: 20, 2: Redefining name 'filenames' from outer scope (line 29) (redefined-outer-name)
+C: 19, 0: Invalid function name "enumerateImagePaths" (invalid-name)
+C: 19, 0: Invalid argument name "dataDirectory1" (invalid-name)
+C: 19, 0: Missing function docstring (missing-docstring)
+C: 23, 8: Invalid variable name "f" (invalid-name)
+W: 22, 4: Unused variable 'path' (unused-variable)
+C: 29, 0: Invalid constant name "filenames" (invalid-name)
+C: 30, 0: Invalid constant name "trainingImageNames" (invalid-name)
+C: 31, 0: Invalid constant name "numTrainingFaces" (invalid-name)
+C: 33, 0: Invalid constant name "maxWeight" (invalid-name)
+C: 39, 0: Invalid constant name "trainingImages" (invalid-name)
+C: 48, 0: Invalid constant name "meanFace" (invalid-name)
+E: 48,11: Module 'numpy' has no 'zeros' member (no-member)
+C: 53, 0: Invalid constant name "trainingImages" (invalid-name)
+C: 59, 0: Invalid constant name "x" (invalid-name)
+C: 59, 2: Invalid constant name "y" (invalid-name)
+C: 60, 0: Invalid constant name "n" (invalid-name)
+E: 61,20: Module 'numpy' has no 'zeros' member (no-member)
+E: 64,11: Module 'numpy' has no 'reshape' member (no-member)
+E: 66,28: Instance of 'matrix' has no 'transpose' member (no-member)
+C: 67, 0: Invalid constant name "eigenvalues" (invalid-name)
+C: 67,13: Invalid constant name "eigenvectors" (invalid-name)
+C: 68, 0: Invalid constant name "indices" (invalid-name)
+C: 69, 0: Invalid constant name "eigenvalues" (invalid-name)
+C: 70, 0: Invalid constant name "eigenvectors" (invalid-name)
+C: 72, 0: Invalid constant name "eigenvalueSum" (invalid-name)
+C: 73, 0: Invalid constant name "partialSum" (invalid-name)
+C: 74, 0: Invalid constant name "numEffectiveEigenvalues" (invalid-name)
+E: 82,18: Module 'numpy' has no 'zeros' member (no-member)
+C: 91, 0: Invalid constant name "personWeights" (invalid-name)
+C:113, 0: Invalid constant name "unknownDirectory" (invalid-name)
+C:114, 0: Invalid constant name "filesToRecognize" (invalid-name)
+C:115, 0: Invalid constant name "unknownFaceImages" (invalid-name)
+C:116, 0: Invalid constant name "notRecognized" (invalid-name)
+C:117, 0: Invalid constant name "recognizedFaces" (invalid-name)
+
+
+Report
+======
+93 statements analysed.
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |92     |68.66 |92       |=          |
++----------+-------+------+---------+-----------+
+|docstring |0      |0.00  |0        |=          |
++----------+-------+------+---------+-----------+
+|comment   |24     |17.91 |24       |=          |
++----------+-------+------+---------+-----------+
+|empty     |18     |13.43 |18       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+External dependencies
+---------------------
+::
+
+    numpy (eigenfaces)
+    scipy 
+      \-misc (eigenfaces)
+      \-spatial 
+        \-distance (eigenfaces)
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |93     |93       |=          |
++-----------+-------+---------+-----------+
+|refactor   |0      |0        |=          |
++-----------+-------+---------+-----------+
+|warning    |48     |48       |=          |
++-----------+-------+---------+-----------+
+|error      |5      |5        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++---------------------+------------+
+|message id           |occurrences |
++=====================+============+
+|bad-whitespace       |44          |
++---------------------+------------+
+|bad-indentation      |44          |
++---------------------+------------+
+|invalid-name         |31          |
++---------------------+------------+
+|trailing-whitespace  |7           |
++---------------------+------------+
+|superfluous-parens   |6           |
++---------------------+------------+
+|no-member            |5           |
++---------------------+------------+
+|line-too-long        |3           |
++---------------------+------------+
+|missing-docstring    |2           |
++---------------------+------------+
+|fixme                |2           |
++---------------------+------------+
+|unused-variable      |1           |
++---------------------+------------+
+|redefined-outer-name |1           |
++---------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at -7.85/10 (previous run: -7.85/10, +0.00)
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |1      |1          |=          |0.00        |100.00   |
++---------+-------+-----------+-----------+------------+---------+
+
+
+

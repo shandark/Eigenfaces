@@ -27,6 +27,31 @@ def enumerateImagePaths(dataDirectory1):
         filenames.append(filename)
   return filenames
 
+def printTitle(titleToPrint):
+    print("\n\n############################################\n%s\n" % titleToPrint)
+
+def compareVisualyFace(faceList):
+   index = 1
+   f = plt.figure()
+   for name in faceList:
+       f.add_subplot(len(faceList), 2, index)
+       index += 1
+       plt.imshow(scipy.misc.imread(name.split(" ")[0]), cmap=plt.cm.Greys_r)
+       f.add_subplot(len(faceList), 2, index)
+       index += 1
+       plt.imshow(scipy.misc.imread(name.split(" ")[1]), cmap=plt.cm.Greys_r)
+   plt.show()
+
+
+def printResults(title, facesList):
+    printTitle(title)
+    
+    print("%25s %25s %20s" % ("Face","Recognized as","Distance"))
+    for nameStr in facesList:
+       print("%25s %25s %20s" % (nameStr.split(" ")[0].split("/")[-1], nameStr.split(" ")[1].split("/")[-1], nameStr.split(" ")[2]))
+    compareVisualyFace(facesList)
+
+
 filenames          = enumerateImagePaths(dataDirectory)
 trainingImageNames = filenames
 numTrainingFaces = len(trainingImageNames)
@@ -155,30 +180,9 @@ for nameToRecognize in filesToRecognize:
     overThreshold.append("%s %s %d" % (nameToRecognize, resultName, d))
 
 
-print("\n\n############################################\nRecognized\n")
-
-print("%25s %25s %20s" % ("Face","Recognized as","Distance"))
-for nameStr in recognizedFaces:
-   print("%25s %25s %20s" % (nameStr.split(" ")[0].split("/")[-1], nameStr.split(" ")[1].split("/")[-1], nameStr.split(" ")[2]))
-   f = plt.figure()
-   f.add_subplot(1, 2, 1)
-   plt.imshow(scipy.misc.imread(nameStr.split(" ")[0]), cmap=plt.cm.Greys_r)
-   f.add_subplot(1, 2, 2)
-   plt.imshow(scipy.misc.imread(nameStr.split(" ")[1]), cmap=plt.cm.Greys_r)
-   plt.show()
-
-print("\n\n############################################\nNot Recognized\n")
-
-print("%25s %25s %20s" % ("Face","Nearest face","Distance"))
-for nameStr in notRecognized:
-   print("%25s %25s %20s" % (nameStr.split(" ")[0].split("/")[-1], nameStr.split(" ")[1].split("/")[-1], nameStr.split(" ")[2]))
-
-print("\n\n############################################\nTotaly not recognized\n")
-
-print("%25s %25s %20s" % ("Face","Nearest face","Distance"))
-for nameStr in overThreshold:
-   print("%25s %25s %20s" % (nameStr.split(" ")[0].split("/")[-1], nameStr.split(" ")[1].split("/")[-1], nameStr.split(" ")[2]))
-
+printResults("Recognized", recognizedFaces)
+printResults("NOT Recognized", notRecognized)
+printResults("Totaly not recognized", overThreshold)
 
 print("\n\nRecognized: %d/%d" % (len(recognizedFaces), len(filesToRecognize)))
 #print(sorted(tempT, key=int))
