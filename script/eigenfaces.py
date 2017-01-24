@@ -47,37 +47,33 @@ def printResults(title, facesList):
     compareVisualyFace(facesList)
 
 
+
+def calcAverageFace(trainingSet):
+    avgFace = numpy.zeros(trainingSet[0].shape)
+    
+    for image in trainingSet:
+      avgFace += image/float(len(trainingSet))
+    
+    return avgFace.astype(int)
+
+
 filenames          = enumerateImagePaths(dataDirectory)
 trainingImageNames = filenames
 numTrainingFaces = len(trainingImageNames)
 
 maxWeight = 0
 
-#
-# Choose training images
-#
+# Calc average face - normalize database
 
 trainingImages = list()
 
 for name in trainingImageNames:
   trainingImages.append( scipy.misc.imread(name) )
 
-#
-# Calculate & subtract average face
-#
+averageFace = calcAverageFace(trainingImages)
+trainingImages = [ image - averageFace for image in trainingImages ] 
 
-meanFace = numpy.zeros(trainingImages[0].shape)
-
-for image in trainingImages:
-  meanFace += image/float(numTrainingFaces)
-
-meanFace = meanFace.astype(int)
-
-trainingImages = [ image - meanFace for image in trainingImages ] 
-
-#
 # Calculate eigenvectors
-#
 
 x,y = trainingImages[0].shape
 n   = x*y
@@ -106,17 +102,14 @@ V = numpy.matrix( numpy.zeros((n,numEffectiveEigenvalues)) )
 for i in range(numEffectiveEigenvalues):
   V[:,i] = A*eigenvectors[:,i].real
 
-
-#
-# Transform remaining images into "face space"
-#
+# Calc weights
 
 personWeights = dict()
 
 for name in filenames:
   image = scipy.misc.imread(name)
 
-  image = image - meanFace 
+  image = image - averageFace 
 
   weights = list()
 
@@ -146,8 +139,8 @@ for nameToRecognize in filesToRecognize:
   image = scipy.misc.imread(nameToRecognize) 
 
   # Convert UNKNOWN face to FaceVector
-  # Normalize vector by image - meanFace
-  image = image - meanFace
+  # Normalize vector by image - averageFace
+  image = image - averageFace
 
   unknownWeights = list()
   d = maxWeight 
