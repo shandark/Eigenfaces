@@ -9,13 +9,8 @@ import os
 import scipy.misc
 
 
-dataDirectory    = "Data/faces/Original"
+dataDirectory    = "faces/trainingSet"
 variance         = 0.95
-
-if variance > 1.0:
-  variance = 1.0
-elif variance < 0.0:
-  variance = 0.0
 
 def enumerateImagePaths(dataDirectory1):
   filenames = list()
@@ -136,7 +131,7 @@ for name in filenames:
 # Start recognition
 
 # TODO: Add path and filenames
-unknownDirectory = "Data/unknown"
+unknownDirectory = "faces/unknown"
 filesToRecognize = enumerateImagePaths(unknownDirectory)
 overThreshold = list()
 notRecognized = list()
