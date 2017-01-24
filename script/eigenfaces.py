@@ -6,9 +6,7 @@ import scipy.spatial.distance
 import imghdr
 import numpy
 import os
-import random
 import scipy.misc
-import math
 
 
 dataDirectory    = "Data/faces/Original"
@@ -115,7 +113,7 @@ for name in filenames:
 # TODO: Add path and filenames
 unknownDirectory = "Data/unknown"
 filesToRecognize = enumerateImagePaths(unknownDirectory)
-unknownFaceImages = list()
+overThreshold = list()
 notRecognized = list()
 recognizedFaces = list()
 
@@ -149,23 +147,38 @@ for nameToRecognize in filesToRecognize:
 
   # TODO: How calc threshold???
   # d < threshold then face K [print filename - recognized person]
-  if d < 224210797:
-    recognizedFaces.append("%25s %25s %20d" % (nameToRecognize.split("/")[-1], resultName.split("/")[-1], d))
+  if d < 159061337:
+    recognizedFaces.append("%s %s %d" % (nameToRecognize, resultName, d))
+  elif d > 159061337 and d < 1219800390:
+    notRecognized.append("%s %s %d" % (nameToRecognize, resultName, d))
   else:
-    notRecognized.append("%25s %25s %20d" % (nameToRecognize.split("/")[-1], resultName.split("/")[-1], d))
+    overThreshold.append("%s %s %d" % (nameToRecognize, resultName, d))
 
 
-print("\n\n############################################\n\n")
+print("\n\n############################################\nRecognized\n")
 
 print("%25s %25s %20s" % ("Face","Recognized as","Distance"))
 for nameStr in recognizedFaces:
-   print(nameStr)
+   print("%25s %25s %20s" % (nameStr.split(" ")[0].split("/")[-1], nameStr.split(" ")[1].split("/")[-1], nameStr.split(" ")[2]))
+   f = plt.figure()
+   f.add_subplot(1, 2, 1)
+   plt.imshow(scipy.misc.imread(nameStr.split(" ")[0]), cmap=plt.cm.Greys_r)
+   f.add_subplot(1, 2, 2)
+   plt.imshow(scipy.misc.imread(nameStr.split(" ")[1]), cmap=plt.cm.Greys_r)
+   plt.show()
 
-print("\n\n############################################\n\n")
+print("\n\n############################################\nNot Recognized\n")
 
 print("%25s %25s %20s" % ("Face","Nearest face","Distance"))
 for nameStr in notRecognized:
-   print(nameStr)
+   print("%25s %25s %20s" % (nameStr.split(" ")[0].split("/")[-1], nameStr.split(" ")[1].split("/")[-1], nameStr.split(" ")[2]))
+
+print("\n\n############################################\nTotaly not recognized\n")
+
+print("%25s %25s %20s" % ("Face","Nearest face","Distance"))
+for nameStr in overThreshold:
+   print("%25s %25s %20s" % (nameStr.split(" ")[0].split("/")[-1], nameStr.split(" ")[1].split("/")[-1], nameStr.split(" ")[2]))
+
 
 print("\n\nRecognized: %d/%d" % (len(recognizedFaces), len(filesToRecognize)))
 #print(sorted(tempT, key=int))
